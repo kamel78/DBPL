@@ -11,7 +11,13 @@ The developed library implements bilinear pairing functions on different curves 
 For each curve, different possible pairing algorithms are implemented (Eta, Tate, Ate and Opt-Ate), with respect to several coordinates systems, and several predefined parameters. The final exponentiation step is optimized using Karabiner’s algorithm. The whole set of functions is implemented using oriented-object model as a set of Delphi’s non-visual components, in order to provide simple and assisted use of the library. This library provides common additionally a visual components inherited from TreeView that presents the parameters of each pairing friendly curve when linked to the corresponding non-visual component. Already supports two main platforms: 64 and 32 bit.
 Please refer to DPBL-Demonstration for more examples (a little and simple demo is also provided in LittleDemo).
 The library is compatible with Delphi Xe2-Xe8 and Delphi DX-10.1-10.2
-        
+
+Components :
+![alt text](https://github.com/kamel78/DBPL/blob/master/Component.png)
+
+Demo :
+![alt text](https://github.com/kamel78/DBPL/blob/master/Appdemo.png)
+
 Features
 With DPBL, you can implement these features easily:
 -	Generating curve’s point on Fields and Extensions-Fields by direct hashing from strings
