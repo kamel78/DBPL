@@ -12,15 +12,16 @@ For each curve, different possible pairing algorithms are implemented (Eta, Tate
 Please refer to DPBL-Demonstration for more examples (a little and simple demo is also provided in LittleDemo).
 The library is compatible with Delphi Xe2-Xe8 and Delphi DX-10.1-10.2
 
-Components :
+**Components**  
 
 ![alt text](https://github.com/kamel78/DBPL/blob/master/Compoents.png)
 
-Demo :
+**Demo**  
 
 ![alt text](https://github.com/kamel78/DBPL/blob/master/Appdemo.png)
 
-Features
+**Features** 
+
 With DPBL, you can implement these features easily:
 -	Generating curve’s point on Fields and Extensions-Fields by direct hashing from strings
 -	Simple choice and initialization of pairings parameters (either from the object’s inspector or by code)
@@ -30,9 +31,11 @@ With DPBL, you can implement these features easily:
 -	Display of results (integer’s values, points ‘coordinates, extension fields values..) in decimal/hexadecimal forms as strings.
 -	Support of customized parameterization  an initialization
 -	
-Usage
+**Usage** 
+
 Can be used to implements different variants of Identity based cryptosystems, pairing based Signature schemes, IBS, ABS…… 
-•	
-Contribute
+
+**Contribute** 
+
 Welcome contribution! 
 
