@@ -12,11 +12,7 @@ For each curve, different possible pairing algorithms are implemented (Eta, Tate
 Please refer to DPBL-Demonstration for more examples (a little and simple demo is also provided in LittleDemo).
 The library is compatible with Delphi Xe2-Xe8 and Delphi DX-10.1-10.2
 
-Components :
-![alt text](https://github.com/kamel78/DBPL/blob/master/Component.png)
 
-Demo :
-![alt text](https://github.com/kamel78/DBPL/blob/master/Appdemo.png)
 
 Features
 With DPBL, you can implement these features easily:
