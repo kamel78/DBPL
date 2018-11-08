@@ -30,10 +30,10 @@ With DPBL, you can implement these features easily:
 -	Extremely fast pairing….
 -	Display of results (integer’s values, points ‘coordinates, extension fields values..) in decimal/hexadecimal forms as strings.
 -	Support of customized parameterization  an initialization
--	
+
 **Usage** 
 
-Can be used to implements different variants of Identity based cryptosystems, pairing based Signature schemes, IBS, ABS…… 
+Can be used to implements different variants of Identity based cryptosystems, pairing based Signature schemes, IBS, ABE…… 
 
 **Contribute** 
 
