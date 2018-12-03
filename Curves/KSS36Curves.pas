@@ -117,7 +117,8 @@ const
  KSS36_256_2_Params:KSS36CurvesParamsDefinition=(SecurityLevel:'256bit';u:'0x126CA209DE61A';Beta:-2;sigma:'0+u*1';A:'0';B:'2';TwistMode:twDType;GenratorX:'-1';TwistGeneratorSeed:55);
  KSS36_192_1_Params:KSS36CurvesParamsDefinition=(SecurityLevel:'192bit';u:'0xC2323FC6A';Beta:-2;sigma:'0+u*1';A:'0';B:'2';TwistMode:twDType;GenratorX:'-1';TwistGeneratorSeed:55);
  KSS36_192_2_Params:KSS36CurvesParamsDefinition=(SecurityLevel:'192bit';u:'0xc2731aa5';Beta:-2;sigma:'0+u*1';A:'0';B:'8';TwistMode:twDType;GenratorX:'1';TwistGeneratorSeed:55);
-
+ KSS36ParamsList:array[0..3] of string=('KSS36_192_1_Params','KSS36_192_2_Params','KSS36_256_1_Params','KSS36_256_2_Params');
+ KSS36ImplementedPairingAlgos:array[0..0] of string=('Optimal Ate Pairing');
 
   procedure ComputeKSS36Parametres(Params: KSS36CurvesParamsDefinition; var Result:PtrCurveParams);
   procedure Register;

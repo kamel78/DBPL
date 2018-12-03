@@ -114,6 +114,9 @@ const
   KSS18_Razvan_128_Params:KSS18CurvesParamsDefinition=(SecurityLevel:'128bit';u:'0x1000003FFE02';Beta:-3;sigma:'0+u*1+u^2*1';A:'0';B:'3';TwistMode:twDType;GenratorX:'1';TwistGeneratorSeed:55);
   KSS18_192_3_Params:KSS18CurvesParamsDefinition=(SecurityLevel:'192bit';u:'0xFFF8800010000000';Beta:-2;sigma:'0+u*1+u^2*1';A:'0';B:'2';TwistMode:twDType;GenratorX:'1';TwistGeneratorSeed:55);
 
+  KSS18ParamsList:array[0..4] of string=('KSS18_Razvan_128_Params','KSS18_192_1_Params','KSS18_Razvan_192_Params','KSS18_192_3_Params','KSS18_Razvan_256_Params');
+  KSS18ImplementedPairingAlgos:array[0..0] of string=('Optimal Ate Pairing');
+
   procedure ComputeKSS18Parametres(Params: KSS18CurvesParamsDefinition; var Result:PtrCurveParams);
   procedure Register;
 

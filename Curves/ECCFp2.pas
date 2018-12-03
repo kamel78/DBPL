@@ -956,6 +956,7 @@ end;
 
 {*******************************************************************************}
 procedure Fp2Point.SetToDefaultGenerator;
+var tmp:Fp2Point;
 begin
 Self.X:=CurveParams.TwistBasePointX;
 Self.Y:=CurveParams.TwistBasePointy;

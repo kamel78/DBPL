@@ -116,6 +116,8 @@ const
  KSS16_192_1_Params:KSS16CurvesParamsDefinition=(SecurityLevel:'192bit';u:'0x2000004007F7F';Beta:-3;sigma:'0+u*1';Gamma:'(0+u*0,1+u*0)';A:'3';B:'0';TwistMode:twMType;GenratorX:'-1';TwistGeneratorSeed:55);
  KSS16_192_2_Params:KSS16CurvesParamsDefinition=(SecurityLevel:'192bit';u:'-0xDFFFFDFFEFFF';Beta:3;sigma:'0+u*1';Gamma:'(0+u*0,1+u*0)';A:'3';B:'0';TwistMode:twMType;GenratorX:'-1';TwistGeneratorSeed:55);
 
+ KSS16ParamsList:array[0..4] of string=('KSS16_128_1_Params','KSS16_Razvan_128_Params','KSS16_128_2_Params','KSS16_192_1_Params','KSS16_192_2_Params');
+ KSS16ImplementedPairingAlgos:array[0..0] of string=('Optimal Ate Pairing');
 
  procedure ComputeKSS16Parametres(Params: KSS16CurvesParamsDefinition; var Result:PtrCurveParams);
  procedure Register;

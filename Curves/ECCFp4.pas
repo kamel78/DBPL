@@ -915,6 +915,7 @@ Self.X:=CurveParams.BLS24TwistGeneratorX;
 Self.Y:=CurveParams.BLS24TwistGeneratorY;
 Self.Z.a.SetFormString('1');
 Self.Z.b.SetFormString('0');
+Self.SetCurveParams(CurveParams);
 Self.Infinity:=false;
 end;
 

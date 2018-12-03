@@ -123,7 +123,9 @@ const
   BLS24_Razvan_192_Params:BLS24CurvesParamsDefinition=(SecurityLevel:'192bit';u:'-0x10007FFFFFFFE40';Beta:-1;sigma:'1+u*1';Gamma:'(0+u*0,1+u*0)';A:'0';B:'-2';TwistMode:twDType;GenratorX:'-1';TwistGeneratorSeed:55);
   BLS24_320_1_Params:BLS24CurvesParamsDefinition=(SecurityLevel:'320bit';u:'0x7FFFFFFFFFFFFFFFFC000024000';Beta:-1;sigma:'1+u*1';Gamma:'(0+u*0,1+u*0)';A:'0';B:'-2';TwistMode:twDType;GenratorX:'3';TwistGeneratorSeed:55);
 
-
+ BLS24ParamsList:array[0..8] of string=('BLS24_192_1_Params','BLS24_192_2_Params','BLS24_192_3_Params',  'BLS24_Razvan_192_Params',
+    'BLS24_256_0_Params','BLS24_256_1_Params','BLS24_256_2_Params','BLS24_320_1_Params','BLS24_Razvan_256_Params');
+ BLS24ImplementedPairingAlgos:array[0..0] of string=('Optimal Ate Pairing');
 
   procedure ComputeBLS24Parametres(Params: BLS24CurvesParamsDefinition; var Result:PtrCurveParams);
   procedure Register;

@@ -121,7 +121,8 @@ const
   BLS12_Razvan_128_Params:BLS12CurvesParamsDefinition=(SecurityLevel:'128bit';u:'-0x1FFFFFFBFFFE00000000';Beta:-1;sigma:'1+u*1';A:'0';B:'4';TwistMode:twMType;GenratorX:'5';TwistGeneratorSeed:55);
   BLS12_128_4_Params:BLS12CurvesParamsDefinition=(SecurityLevel:'128bit';u:'0x4000000000000438';Beta:-1;sigma:'1+u*2';A:'0';B:'6';TwistMode:twDType;GenratorX:'1';TwistGeneratorSeed:55);
 
-
+  BLS12ParamsList:array[0..3] of string=('BLS12_128_1_Params','BLS12_Razvan_128_Params','BLS12_128_3_Params','BLS12_128_4_Params');
+  BLS12ImplementedPairingAlgos:array[0..0] of string=('Optimal Ate Pairing');
 
   procedure ComputeBLS12Parametres(Params: BLS12CurvesParamsDefinition; var Result:PtrCurveParams);
 

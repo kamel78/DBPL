@@ -135,6 +135,8 @@ const
     B: '0x05607CD7395B5F49C34A289E4072C37A56601B69C8F64F6BA3F827C87DEE8279BC2E640F16C279';
     GenratorX: '-5');
 
+  MNTParamsList:array[0..2] of string=('MNT_A_Params_80','MNT_B_Params_106','MNT_C_Params_115');
+  MNTImplementedPairingAlgos:array[0..1] of string=('Optimal Ate Pairing','Tate');
     procedure Register;
 
 procedure GenerateMNTParametres(Params: MNTCurvesParamsDefinition;

@@ -103,6 +103,10 @@ Type
 const
 
   BLS27_256_1_Params:BLS27CurvesParamsDefinition=(SecurityLevel:'192bit';u:'0x1A0000F8';Beta:2;sigma:'0+u*1+u^2*0';A:'0';B:'-2';TwistMode:twMType;GenratorX:'-1';TwistGeneratorSeed:55);
+
+  BLS27ParamsList:array[0..0] of string=('BLS27_256_1_Params');
+  BLS27ImplementedPairingAlgos:array[0..0] of string=('Optimal Ate Pairing');
+
   procedure ComputeBLS27Parametres(Params: BLS27CurvesParamsDefinition; var Result:PtrCurveParams);
   procedure Register;
 

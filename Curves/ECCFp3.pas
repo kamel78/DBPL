@@ -897,6 +897,7 @@ X.SetFieldParams(Value.FieldParam);
 Y.SetFieldParams(Value.FieldParam);
 Z.SetFieldParams(Value.FieldParam);
 ComputeLigneValue:=ComputLmd;
+ComputeLigneAtFp6:=ComputLmd;
 Infinity:=false;
 end;
 {*******************************************************************************}
@@ -1044,7 +1045,11 @@ tmp.Z.c:=0;
 tmp.Infinity:=false;
 tmp.SetCurveParams(CurveParams);
 Tmp.ComputeLigneAtFp6:=false;
-Self:=CurveParams.Htw*tmp;
+//Self:=CurveParams.Htw*tmp;
+if CurveParams.Family=cfKSS18 then _Fast_KSS18_Mul_Htw_Fp3Point(tmp,Self)
+else if CurveParams.Family=cfMNT then  _Fast_MNT_Mul_Htw_Fp3Point(tmp,Self)
+else _Mul_Fp_Fp3Point(CurveParams.Htw,tmp,self,csAffine); // for MNT curves only affine coordinates are implemented
+
 end;
 
 {*******************************************************************************}

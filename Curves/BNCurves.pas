@@ -121,6 +121,8 @@ const
       BN_ISO512_Params:BNCurvesParamsDefinition=(Identifier:'ISO512';u:'-128935115601040359985952327046386418689';Beta:-1;sigma:'1+u*1';A:'0';B:'3';TwistMode:twMType;GenratorX:'1';TwistGeneratorBasePointX:'1+u*0');
       BN_Razvan_update:BNCurvesParamsDefinition=(Identifier:'Razvan128Level';u:'0x4001FFFFFFFFFFFFFFFFFFFFFBFFF';Beta:-1;sigma:'1+u*1';A:'0';B:'-4';TwistMode:twMType;GenratorX:'2';TwistGeneratorBasePointX:'1+u*2');
 
+      BNParamsList:array[0..8] of string=('Aranha254','BCMNPZ254','Beuchat254','ISO224','ISO256','ISO320','ISO512','Razvan128Level','Scott254');
+      BNImplementedPairingAlgos:array[0..3] of string=('Eta Pairing','Optimal Ate Pairing','R-Ate Pairing','Tate Pairing');
 procedure Register;
 
 implementation
@@ -236,7 +238,7 @@ scBeuchat:begin
                BasePointY:='0x2370FB049D410FBE4E761A9886E502417D023F40180000017E805FFFFFFFFFFF';
                TwistBasePointX.SetFieldParams(TowerParam^.FieldParam);
                TwistBasePointy.SetFieldParams(TowerParam^.FieldParam);
-               TwistBasePointX.SetFormString('-1');
+               TwistBasePointX.SetFormString('1');
                TwistBasePointY.SetFormString('0xE86A09616F21FF57D258D5A8383F5ECB1176627C7036498A09DFF44CC78DEA9+u*0xB6097CB80DCE231E9E5E90DED770356AE84756E7D41259B244DC8A674D16996');
           end;
 scScott:begin
