@@ -20,6 +20,8 @@ The library is compatible with Delphi Xe2-Xe8 and Delphi DX-10.1-10.2
 
 ![alt text](https://github.com/kamel78/DBPL/blob/master/Appdemo.png)
 
+![alt text](https://github.com/kamel78/DBPL/blob/master/BLS.png)
+
 **Features** 
 
 With DPBL, you can implement these features easily:
