@@ -15,7 +15,7 @@ interface
 
 uses System.Types,System.UITypes, System.SysUtils, System.Math,VCL.dialogs;
                 //150
-Const MaxLen=180 ;
+Const MaxLen=190 ;
 
   Const basediv2=2147483648;
       base=4294967296;
@@ -149,7 +149,7 @@ Type
         Procedure ExtendedEuclid(a,b:LInt;Var s,t:LInt);
         Function ResolveDiopantiene(a,b,c:LInt;var x,y:LInt):Boolean;
         Procedure GetRandomLIntOnBits(Var Result:LInt;Numbits:Integer);
-        Procedure GetRandomLIntLowerThan(var Result:LInt;Limit:LInt;Seed:Word=0);
+        Procedure GetRandomLIntLowerThan(var Result:LInt;Limit:LInt;Seed:Word=0;SameBitlength:boolean=true);
         Procedure InitMontgomeryStruct(Modulo:LInt;var Struct:PtrMontgomeryStruct);
         Function IsLIntPrime(Number:LInt;Prob:Extended=0.9999):Boolean;
         function ModSquareLInt(a,modulo:LInt;Var Output:LInt;MgStruct:PtrMontgomeryStruct; test:boolean=true):boolean;
@@ -2145,15 +2145,17 @@ end;
 {***************************************************************************************}
 {             Generate a random binary block Lower than Limit                           }
 {***************************************************************************************}
-Procedure GetRandomLIntLowerThan(var Result:LInt;Limit:LInt;Seed:Word=0);
+Procedure GetRandomLIntLowerThan(var Result:LInt;Limit:LInt;Seed:Word=0;SameBitlength:boolean=true);
 var i:integer;
 begin
-if seed=0 then Randomize
-else RandSeed:=seed;
-Result.data.i32[-1]:=Limit.data.i32[-1];
-For i:=0 to Result.data.i32[-1]-1 do Result.data.i32[i]:=Random(MaxLongint);
-_Mod_LInt(Result,Limit,Result);
-while (Result.data.i32[Result.data.i16[-2]-1]=0)and(Result.data.i16[-2]>0) do dec(Result.data.i16[-2]);
+repeat
+      if seed=0 then Randomize
+      else RandSeed:=seed;
+      Result.data.i32[-1]:=Limit.data.i32[-1];
+      For i:=0 to Result.data.i32[-1]-1 do Result.data.i32[i]:=Random(MaxLongint);
+      _Mod_LInt(Result,Limit,Result);
+      while (Result.data.i32[Result.data.i16[-2]-1]=0)and(Result.data.i16[-2]>0) do dec(Result.data.i16[-2]);
+      until (not(SameBitlength)or(Result.BitLength=Limit.BitLength));
 end;
 
 {***************************************************************************************}
@@ -2436,7 +2438,7 @@ begin
 s:=a;
 if (s[1]='$') then s:=copy(S,2,length(s))
 else if (s[1]='0')and(s[2]='x') then s:=copy(S,3,length(s));
-setlength(result,(length(a) div 2+length(a) mod 2));
+setlength(result,(length(s) div 2+length(s) mod 2));
 i:=0;
 While (s<>'') do begin
                  if length(s)>2 then begin
