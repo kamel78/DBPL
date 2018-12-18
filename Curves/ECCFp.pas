@@ -15,9 +15,9 @@ uses LargeIntegers,Fp2Arithmetic,Fp3Arithmetic,Fp12Arithmetic,Fp6Arithmetic,Hash
 
 Type
    FpPoint=record     //  Definition of a Point on EC Over Fp
-      private
-      CurveParams: PtrCurveParams;
+
       public
+      CurveParams: PtrCurveParams;
       X,Y,Z:LInt;
       Lambda,C:LInt;
       LineAtQPFp12:Fp12Int;           // For Tate/Eta Pairings BN Curves
@@ -745,6 +745,7 @@ else begin
                                                 _Add_Jacobian_Fp_Point(NegLeft,Result,Result);
                                          end;
      _Jacobian_To_Affine_FpPoint(Result,Result);
+     if _IsNeg(Left) then _Neg_Fp_Point(Result,Result);
      end;
 end;
 
@@ -950,6 +951,10 @@ end;
 function FpPoint.CompressToArray:TBytes;
 var i:Integer;
 begin
+if Infinity then begin
+                 Setlength(result,0);
+                 exit;
+                 end;
 if X.BitLength mod 8=0 then Setlength(Result,(X.BitLength div 8))
 else Setlength(Result,(X.BitLength div 8)+1);
 SetLength(Result,Length(Result)+1);
@@ -963,6 +968,7 @@ var i:Integer;
     sign:byte;
     tmp:LInt;
 begin
+Infinity:=false;
 Sign:=a[length(a)-1];
 X.Data.i16[-1]:=0;
 X.Data.i32[((Length(a)-1) div 4)]:=0;

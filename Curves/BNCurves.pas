@@ -1040,8 +1040,8 @@ Tree.Items.AddChild(tmp,'Tate');
 Tree.Items.AddChild(tmp,'Otp-Ate');
 Tree.Items.AddChild(tmp,'R-Ate');
 tmp:=Tree.Items.Add(nil,'Tower Construction');
-if Curveparams.FieldParam.Beta<0 then Tree.Items.AddChild(tmp,'Fp2<u>=ExstensionField<u,|u^2-'+inttostr(Abs(Curveparams.FieldParam.Beta))+'>')
-else Tree.Items.AddChild(tmp,'Fp2<u>=ExstensionField<u,|u^2+'+inttostr(Curveparams.FieldParam.Beta)+'>');
+if Curveparams.FieldParam.Beta<0 then Tree.Items.AddChild(tmp,'Fp2<u>=ExstensionField<u,|u^2+'+inttostr(Abs(Curveparams.FieldParam.Beta))+'>')
+else Tree.Items.AddChild(tmp,'Fp2<u>=ExstensionField<u,|u^2-'+inttostr(Curveparams.FieldParam.Beta)+'>');
 Tree.Items.AddChild(tmp,'Fp6<v>=ExstensionField<v,|v^3-('+Curveparams.TowerParam.Sigma.toHexString+')>');
 Tree.Items.AddChild(tmp,'Fp12<w>=ExstensionField<w,|w^2-v>');
 tmp:=Tree.Items.Add(nil,' = '+floattostrf(CurveParams.P.BitLength/CurveParams.R.BitLength,ffGeneral, 2, 4 ));

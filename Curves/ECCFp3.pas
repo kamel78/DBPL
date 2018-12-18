@@ -52,6 +52,7 @@ uses Fp3Arithmetic,System.SysUtils,LargeIntegers,Fp18Arithmetic,Fp6Arithmetic,Ha
     function _Is_OnCurve_Fp3Point(value:Fp3Point):boolean;
     procedure _Frobenius_Map_i(const Value:Fp3Point;pow:integer;var Result:Fp3Point);
     procedure _Mul_Fp_Fp3Point(const Left:LInt;const Right:Fp3Point;var Result:Fp3Point;CoordSys:CoordinatesSystem=csAffine);
+    procedure _Mul_NAF_Fp3_FpPoint(const Left:LInt;const Right:Fp3Point;var Result:Fp3Point;CoordSys:CoordinatesSystem=csAffine);
     procedure _Jacobian_To_Affine_Fp3Point(Value:Fp3Point;var Result:Fp3Point);
     procedure _Projective_To_Affine_Fp3Point(Value:Fp3Point;var Result:Fp3Point);
     function _Are_Equals_Fp3Points(left,right:Fp3Point):boolean;
@@ -133,6 +134,9 @@ else begin
           _Sub_Fp3(Left.X,Result.X,t[2]);
           _Mul_Fp3(t[4],t[2],Result.Y);
           _Sub_Fp3(Result.Y,Left.Y,Result.Y);
+          Result.Z.a:=1;
+          Result.Z.b:=0;
+          Result.Z.c:=0;
           end;
      end;
 end;
@@ -904,6 +908,10 @@ end;
 function Fp3Point.CompressToArray: TBytes;
 var L:integer;
 begin
+if Infinity then begin
+                 Setlength(result,0);
+                 exit;
+                 end;
 L:=X.Field.p.Data.i32[-1]*4*3;
 Setlength(Result,L);
 Move(X.a.Data.i8[0],Result[0],Length(Result)div 3);
@@ -988,8 +996,11 @@ repeat
   if infinity then j:=j+1;
   until not Infinity;
 tmp.SetCurveParams(Self.CurveParams);
-_Mul_Fp_Fp3Point(CurveParams.Htw,Self,tmp,csAffine);
-Self:=tmp;
+//_Mul_Fp_Fp3Point(CurveParams.Htw,Self,tmp,csAffine);
+if CurveParams.Family=cfKSS18 then _Fast_KSS18_Mul_Htw_Fp3Point(Self,tmp)
+else if CurveParams.Family=cfMNT then  _Fast_MNT_Mul_Htw_Fp3Point(Self,tmp)
+else _Mul_Fp_Fp3Point(CurveParams.Htw,Self,tmp,csAffine); // for MNT curves only affine coordinates are implemented
+  Self:=tmp;
 end;
 
 {*******************************************************************************}
@@ -1018,8 +1029,8 @@ repeat
                        Self:=tmp;
                        end;
   until (not Infinity) ;
-  _Mul_Fp_Fp3Point(CurveParams.Rtw,Self,tmp,csAffine);
-if not tmp.Infinity then showmessage('problem! G2');
+  //_Mul_Fp_Fp3Point(CurveParams.Rtw,Self,tmp,csAffine);
+//if not tmp.Infinity then showmessage('problem! G2');
 end;
 {*******************************************************************************}
 procedure Fp3Point.SetPairingPointCoordinates(PtX, PtY: LInt);

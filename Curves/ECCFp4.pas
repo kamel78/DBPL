@@ -50,7 +50,8 @@ type
   procedure _Neg_Fp4_Point(Value: Fp4Point; var Result: Fp4Point);
   function _Is_OnCurve_Fp4Point(Value: Fp4Point): boolean;
   procedure _Frobenius_Map_i(const Value: Fp4Point; power:integer;var Result: Fp4Point);
-  procedure _Mul_Fp4_FpPoint(const Left: LInt; const Right: Fp4Point;  var Result: Fp4Point; CoordSys: CoordinatesSystem = csAffine);
+  procedure _Mul_Fp_Fp4Point(const Left: LInt; const Right: Fp4Point;  var Result: Fp4Point; CoordSys: CoordinatesSystem = csAffine);
+  procedure _Mul_NAF_Fp_Fp4Point(const Left: LInt; const Right: Fp4Point;var Result: Fp4Point; CoordSys: CoordinatesSystem = csAffine);
   procedure _Fast_Mul_Htw_Fp4Point(const Qx0: Fp4Point;var Result: Fp4Point);
   procedure _Projective_To_Affine_Fp4Point(Value: Fp4Point; var Result: Fp4Point);  //(X/Z,Y/Z)
   procedure _Projective2_To_Affine_Fp4Point(Value: Fp4Point; var Result: Fp4Point); //(X/Z,Y/Z^2)
@@ -96,6 +97,10 @@ else begin
           _Sub_FP4(Left.X, Result.X, t[2]);
           _Mul_FP4(t[4], t[2], Result.Y);
           _Sub_FP4(Result.Y, Left.Y, Result.Y);
+          Result.Z.a.a := 1;
+          Result.Z.a.b := 0;
+          Result.Z.b.a := 0;
+          Result.Z.b.b := 0;
           if Result.ComputeLigneValue then begin
           if Left.CurveParams.TwistMode=twDType then begin
                                                      if Left.CurveParams.Family=cfKSS16 then begin
@@ -137,6 +142,7 @@ else begin
                  Result.LineAtP24.c.b.SetToZero;
                  end;
               end;
+
           end;
           end;
      end;
@@ -513,7 +519,7 @@ end;
 
 
     { **********   Multiply a scalar with an Fp4 Point ******* }
-procedure _Mul_Fp4_FpPoint(const Left: LInt; const Right: Fp4Point;var Result: Fp4Point; CoordSys: CoordinatesSystem = csAffine);
+procedure _Mul_Fp_Fp4Point(const Left: LInt; const Right: Fp4Point;var Result: Fp4Point; CoordSys: CoordinatesSystem = csAffine);
 // Right Should be different than Result
 var  i: integer;
 begin
@@ -558,21 +564,21 @@ begin
 Result.CurveParams:=Qx0.CurveParams;
 if Qx0.CurveParams<>nil then  Result.CurveParams:=Qx0.CurveParams;
 _Neg_Fp4_Point(Qx0,Qx0_);
-_Mul_Fp4_FpPoint(Qx0.CurveParams.u,Qx0,Qx1,csProjective);
+_Mul_Fp_Fp4Point(Qx0.CurveParams.u,Qx0,Qx1,csProjective);
 _Neg_Fp4_Point(Qx1,Qx1_);
-_Mul_Fp4_FpPoint(Qx0.CurveParams.u,Qx1,Qx2,csProjective);
+_Mul_Fp_Fp4Point(Qx0.CurveParams.u,Qx1,Qx2,csProjective);
 _Neg_Fp4_Point(Qx2,Qx2_);
-_Mul_Fp4_FpPoint(Qx0.CurveParams.u,Qx2,Qx3,csProjective);
+_Mul_Fp_Fp4Point(Qx0.CurveParams.u,Qx2,Qx3,csProjective);
 _Neg_Fp4_Point(Qx3,Qx3_);
-_Mul_Fp4_FpPoint(Qx0.CurveParams.u,Qx3,Qx4,csProjective);
+_Mul_Fp_Fp4Point(Qx0.CurveParams.u,Qx3,Qx4,csProjective);
 _Neg_Fp4_Point(Qx4,Qx4_);
-_Mul_Fp4_FpPoint(Qx0.CurveParams.u,Qx4,Qx5,csProjective);
+_Mul_Fp_Fp4Point(Qx0.CurveParams.u,Qx4,Qx5,csProjective);
 _Neg_Fp4_Point(Qx5,Qx5_);
-_Mul_Fp4_FpPoint(Qx0.CurveParams.u,Qx5,Qx6,csProjective);
+_Mul_Fp_Fp4Point(Qx0.CurveParams.u,Qx5,Qx6,csProjective);
 _Neg_Fp4_Point(Qx6,Qx6_);
-_Mul_Fp4_FpPoint(Qx0.CurveParams.u,Qx6,Qx7,csProjective);
+_Mul_Fp_Fp4Point(Qx0.CurveParams.u,Qx6,Qx7,csProjective);
 _Neg_Fp4_Point(Qx7,Qx7_);
-_Mul_Fp4_FpPoint(Qx0.CurveParams.u,Qx7,Qx8,csProjective);
+_Mul_Fp_Fp4Point(Qx0.CurveParams.u,Qx7,Qx8,csProjective);
 _Neg_Fp4_Point(Qx8,Qx8_);
 xA:=Qx0;
 xC:=Qx7;
@@ -667,7 +673,7 @@ _Add_Affine_Fp4_Point(t0,t1,Result);
 end;
 
       { **********   Multiply a scalar with an Fp4 Point (Negative Representation of the Exponent)******* }
-procedure _Mul_NAF_Fp4_FpPoint(const Left: LInt; const Right: Fp4Point;var Result: Fp4Point; CoordSys: CoordinatesSystem = csAffine);
+procedure _Mul_NAF_Fp_Fp4Point(const Left: LInt; const Right: Fp4Point;var Result: Fp4Point; CoordSys: CoordinatesSystem = csAffine);
 var  i: integer;
      loop: LIntArrayForm;
      NegLeft: Fp4Point;
@@ -778,6 +784,10 @@ end;
 function Fp4Point.CompressToArray: TBytes;
 var L:integer;
 begin
+if Infinity then begin
+                 SetLength(Result, 0);
+                 exit;
+                 end;
 L:=X.a.Field.p.Data.i32[-1]*4*4;
 Setlength(Result,L);
 Move(X.a.a.Data.i8[0],Result[0],Length(Result)shr 2);
@@ -789,6 +799,7 @@ end;
 { ******************************************************************************* }
 procedure Fp4Point.DeCompressFromArray(a: TBytes);
 begin
+Infinity:=false;
 Move(a[0],X.a.a.Data.i8[0],Length(a) shr 2);
 Move(a[Length(a) shr 2],X.a.b.Data.i8[0],Length(a) shr 2);
 Move(a[Length(a) shr 1],X.b.a.Data.i8[0],Length(a) shr 2);
@@ -859,7 +870,7 @@ repeat
   SetPointValue(X);
   j:=j+1;
 until not Infinity;
-if CurveParams.Family=cfKSS16 then _Mul_Fp4_FpPoint(CurveParams.htw, tmp, Self, csaffine)
+if CurveParams.Family=cfKSS16 then _Mul_Fp_Fp4Point(CurveParams.htw, tmp, Self, csaffine)
 else _Fast_Mul_Htw_Fp4Point(tmp,Self);
 Self.Z.SetToZero;
 Self.z.a.a:=1;
@@ -883,7 +894,7 @@ X.a.SetToRandom;
 X.b.SetToZero;
 SetPointValue(X);
 if not Infinity then begin
-                     if CurveParams.Family=cfKSS16 then _Mul_Fp4_FpPoint(CurveParams.htw, Self, tmp, csaffine)
+                     if CurveParams.Family=cfKSS16 then _Mul_Fp_Fp4Point(CurveParams.htw, Self, tmp, csaffine)
                      // We use instead a faster approach proposed by Luis Dominiguez
                      else  _Fast_Mul_Htw_Fp4Point(Self,tmp);
                      Self := tmp;
@@ -942,7 +953,7 @@ end;
 { ******************************************************************************* }
 class operator Fp4Point.Multiply(Left: LInt; Right { Q } : Fp4Point): Fp4Point;
 begin
-_Mul_Fp4_FpPoint(Left, Right, Result);
+_Mul_Fp_Fp4Point(Left, Right, Result);
 end;
 
 { ******************************************************************************* }

@@ -671,8 +671,8 @@ Tree.Items.AddChild(tmp,'Security in GT (GNFS) : '+inttostr(Round(r))+' bit').Im
 tmp:=Tree.Items.Add(nil,'Implemented Pairings');
 Tree.Items.AddChild(tmp,'Otp-Ate');
 tmp:=Tree.Items.Add(nil,'Tower Construction');
-if Curveparams.FieldParam.Beta<0 then Tree.Items.AddChild(tmp,'Fp3<u>=ExstensionField<u,|u^3'+inttostr(Curveparams.FieldParam.Beta)+'>')
-else Tree.Items.AddChild(tmp,'Fp3<u>=ExstensionField<u,|u^3+'+inttostr(Curveparams.FieldParam.Beta)+'>');
+if Curveparams.FieldParam.Beta<0 then Tree.Items.AddChild(tmp,'Fp3<u>=ExstensionField<u,|u^3+'+inttostr(Curveparams.FieldParam.Beta)+'>')
+else Tree.Items.AddChild(tmp,'Fp3<u>=ExstensionField<u,|u^3-'+inttostr(Curveparams.FieldParam.Beta)+'>');
 Tree.Items.AddChild(tmp,'Fp9<v>=ExstensionField<v,|v^3-('+Curveparams.TowerParam3.Sigma.toHexString+')>');
 Tree.Items.AddChild(tmp,'Fp18<w>=ExstensionField<w,|w^3-v>');
 tmp:=Tree.Items.Add(nil,' = '+floattostrf(CurveParams.P.BitLength/CurveParams.R.BitLength,ffGeneral, 2, 4 ));

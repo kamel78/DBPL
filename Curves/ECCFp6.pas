@@ -75,6 +75,8 @@ else begin
                                                Result.Z.a.b := 0;
                                                Result.Z.b.a := 0;
                                                Result.Z.b.b := 0;
+                                               Result.Z.c.a:=0;
+                                               Result.Z.c.b:=0;
                                                Result.SetCurveParams(Right.CurveParams, ComputeLambda);
                                                Result.Infinity := true;
                                                end;
@@ -93,6 +95,12 @@ else begin
           _Sub_Fp6(Left.X, Result.X, t[2]);
           _Mul_Fp6(t[4], t[2], Result.Y);
           _Sub_Fp6(Result.Y, Left.Y, Result.Y);
+          Result.Z.a.a := 1;
+          Result.Z.a.b := 0;
+          Result.Z.b.a := 0;
+          Result.Z.b.b := 0;
+          Result.Z.c.a:=0;
+          Result.Z.c.b:=0;
           if Result.ComputeLigneValue then begin
           if Left.CurveParams.TwistMode=twDType then begin
                                                      Result.LineAtP36.a.a.SetToZero;
@@ -692,6 +700,10 @@ end;
 function Fp6Point.CompressToArray: TBytes;
 var L:integer;
 begin
+if Infinity then begin
+                 Setlength(result,0);
+                 exit;
+                 end;
 L:=X.a.Field.p.Data.i32[-1]*4*6;
 Setlength(Result,L);
 Move(X.a.a.Data.i8[0],Result[0],Length(Result) div 6);

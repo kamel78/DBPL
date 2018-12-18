@@ -724,7 +724,7 @@ with Result^ do begin
                 Gtmp.Z.a.SetFormString('1');
                 Gtmp.Z.b.SetFormString('0');
                 Gtmp.Infinity:=false;
-                _Mul_Fp4_FpPoint(htw,Gtmp,Genrator);
+                _Mul_Fp_Fp4Point(htw,Gtmp,Genrator);
                 BLS24TwistGeneratorX:=Genrator.X;
                 BLS24TwistGeneratorY:=Genrator.Y;
                 end;
@@ -795,8 +795,8 @@ Tree.Items.AddChild(tmp,'Security in GT (GNFS) : '+inttostr(Round(r))+' bit').Im
 tmp:=Tree.Items.Add(nil,'Implemented Pairings');
 Tree.Items.AddChild(tmp,'Otp-Ate');
 tmp:=Tree.Items.Add(nil,'Tower Construction');
-if Curveparams.FieldParam.Beta<0 then Tree.Items.AddChild(tmp,'Fp2<u>=ExstensionField<u,|u^2-'+inttostr(Abs(Curveparams.FieldParam.Beta))+'>')
-else Tree.Items.AddChild(tmp,'Fp2<u>=ExstensionField<u,|u^2+'+inttostr(Curveparams.FieldParam.Beta)+'>');
+if Curveparams.FieldParam.Beta<0 then Tree.Items.AddChild(tmp,'Fp2<u>=ExstensionField<u,|u^2+'+inttostr(Abs(Curveparams.FieldParam.Beta))+'>')
+else Tree.Items.AddChild(tmp,'Fp2<u>=ExstensionField<u,|u^2-'+inttostr(Curveparams.FieldParam.Beta)+'>');
 Tree.Items.AddChild(tmp,'Fp4<v>=ExstensionField<v,|v^2-('+Curveparams.TowerParam.Sigma.toHexString+')>');
 Tree.Items.AddChild(tmp,'Fp8<w>=ExstensionField<w,|w^2-v>');
 Tree.Items.AddChild(tmp,'Fp24<z>=ExstensionField<z,|z^3-w>');

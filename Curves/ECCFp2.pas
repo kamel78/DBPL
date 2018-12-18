@@ -53,6 +53,7 @@ uses Fp2Arithmetic,System.SysUtils,LargeIntegers,Fp12Arithmetic,Fp6Arithmetic,Ha
     procedure _Frobenius_Map(const Value:Fp2Point;var Result:Fp2Point);
     procedure _Frobenius_Map3(const Value:Fp2Point;var Result:Fp2Point);
     procedure _Mul_Fp_Fp2Point(const Left:LInt;const Right:Fp2Point;var Result:Fp2Point;CoordSys:CoordinatesSystem=csAffine);
+    procedure _Mul_NAF_Fp2_FpPoint(const Left:LInt;const Right:Fp2Point;var Result:Fp2Point;CoordSys:CoordinatesSystem=csAffine);
     procedure _Jacobian_To_Affine_Fp2Point(Value:Fp2Point;var Result:Fp2Point);
     procedure _Projective_To_Affine_Fp2Point(Value:Fp2Point;var Result:Fp2Point);
     function _Are_Equals_Fp2Points(left,right:Fp2Point):boolean;
@@ -120,6 +121,8 @@ else begin
           _Sub_FP2(Left.X,Result.X,t[2]);
           _Mul_FP2(t[4],t[2],Result.Y);
           _Sub_FP2(Result.Y,Left.Y,Result.Y);
+          Result.Z.a:=1;
+          Result.Z.b:=0;
           end;
      end;
 end;
@@ -826,6 +829,10 @@ end;
 function Fp2Point.CompressToArray: TBytes;
 var L:integer;
 begin
+if Infinity then begin
+                 Setlength(result,0);
+                 exit;
+                 end;
 L:=X.Field.p.Data.i32[-1]*4*2;
 Setlength(Result,L);
 Move(X.a.Data.i8[0],Result[0],Length(Result)shr 1);

@@ -67,10 +67,9 @@ else begin
      if _Equals_FP9(Left.X, Right.X) then begin
                                           if _Equals_Fp9(Left.Y, Right.Y) then _Double_Affine_Fp9_Point(Left, Result)
                                           else begin
-                                               Result.Z.a.a := 1;
-                                               Result.Z.a.b := 0;
-                                               Result.Z.b.a := 0;
-                                               Result.Z.b.b := 0;
+                                               Result.Z.a.SetToZero;
+                                               Result.Z.b.SetToZero;
+                                               Result.Z.c.SetToZero;
                                                Result.SetCurveParams(Right.CurveParams, ComputeLambda);
                                                Result.Infinity := true;
                                                end;
@@ -89,6 +88,9 @@ else begin
           _Mul_FP9(t3,B,t3);
           _Sub_FP9(t3,Right.Y,Result.Y);
           Result.X:=tmp;
+          Result.Z.a.SetToZero;
+          Result.Z.b.SetToZero;
+          Result.Z.c.SetToZero;
           if Result.ComputeLigneValue then begin
                                            _Sqr_FP9(Result.X,t3);
                                            _Mul_FP9(B,Result.Y,C);
@@ -523,6 +525,10 @@ end;
 function Fp9Point.CompressToArray: TBytes;
 var L:integer;
 begin
+if Infinity then begin
+                 Setlength(result,0);
+                 exit;
+                 end;
 L:=X.a.Field.p.Data.i32[-1]*4*9;
 Setlength(Result,L);
 Move(X.a.a.Data.i8[0],Result[0],Length(Result) div 9);
